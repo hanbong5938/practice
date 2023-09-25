@@ -38,4 +38,10 @@ class UserApiTest {
             MockMvcResultMatchers.status().isCreated
         )
     }
+
+    @Test
+    fun both() {
+        signUp()
+        findAll()
+    }
 }

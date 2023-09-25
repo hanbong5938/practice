@@ -24,7 +24,7 @@ dependencies {
     api("io.github.oshai:kotlin-logging-jvm:5.1.0")
 
     testApi("org.springframework.boot:spring-boot-starter-test")
-    api("com.h2database:h2:2.1.214")
+    testRuntimeOnly("com.h2database:h2:2.1.214")
 }
 
 tasks.withType<Test> {

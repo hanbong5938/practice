@@ -9,8 +9,8 @@ class UserServiceImpl(
 ) : UserService {
 
 
-    override fun signUp(request: SignUpRequest): User {
-        return userRepository.save(User(name = request.name))
+    override fun signUp(request: SignUpRequest) {
+        userRepository.save(User(name = request.name))
     }
 
     override fun findAll(): MutableList<User> {

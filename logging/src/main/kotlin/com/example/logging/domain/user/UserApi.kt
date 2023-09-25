@@ -1,6 +1,7 @@
 package com.example.logging.domain.user
 
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 
@@ -8,14 +9,9 @@ import org.springframework.web.bind.annotation.*
 class UserApi(private val userService: UserService) {
 
     @GetMapping("/all")
-    fun findAll(): List<User> {
-        return userService.findAll()
-    }
+    fun findAll(): ResponseEntity<List<User>> = ResponseEntity.ok(userService.findAll())
 
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-    fun signUp(@RequestBody request: SignUpRequest): SignUpResponse {
-        val user = userService.signUp(request)
-        return SignUpResponse(user)
-    }
+    fun signUp(@RequestBody request: SignUpRequest) = userService.signUp(request)
 }

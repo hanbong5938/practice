@@ -13,9 +13,8 @@ class ApiLogInterceptor : HandlerInterceptor {
     private val logger = KotlinLogging.logger {}
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         if (handler is HandlerMethod) {
-            val wrapper = request as ContentCachingRequestWrapper
-            val body = String(wrapper.contentAsByteArray)
-            logger.info { "[Interceptor Request] ${handler.beanType.simpleName}.${handler.method.name} : ${request.method} ${request.requestURI} [Body] : $body" }
+            request as ContentCachingRequestWrapper
+            logger.info { "[Interceptor PRE Handler Request] ${handler.beanType.simpleName}.${handler.method.name} : ${request.method} ${request.requestURI} [Body] : ${String(request.contentAsByteArray)}" }
         }
         return true
     }
@@ -27,10 +26,10 @@ class ApiLogInterceptor : HandlerInterceptor {
         ex: Exception?
     ) {
         if (handler is HandlerMethod) {
-            val wrapper = response as ContentCachingResponseWrapper
-            val body = String(wrapper.contentAsByteArray)
-            logger.info { "[Interceptor Response] ${handler.beanType.simpleName}.${handler.method.name} : ${response.status} [Body] : $body" }
+            request as ContentCachingRequestWrapper
+            response as ContentCachingResponseWrapper
+            logger.info { "[Interceptor Request] ${handler.beanType.simpleName}.${handler.method.name} : ${request.method} ${request.requestURI} [Body] : ${String(request.contentAsByteArray)}" }
+            logger.info { "[Interceptor Response] ${handler.beanType.simpleName}.${handler.method.name} : ${response.status} [Body] : ${String(response.contentAsByteArray)}" }
         }
     }
-
 }
